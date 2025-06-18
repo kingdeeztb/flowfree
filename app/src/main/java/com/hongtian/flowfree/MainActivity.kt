@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_home)
+        setContentView(R.layout.activity_main)
 
         val bottomNav = findViewById<BottomNavigationView>(R.id.bottom_navigation)
         bottomNav.setOnItemSelectedListener { item ->
@@ -61,145 +61,145 @@ class MainActivity : AppCompatActivity() {
 
 
 
-        // 找到布局中的Switch控件
-        val myopenclncSwitch: Switch = findViewById(R.id.openswitchclnc)
-        //按钮button控件
-        val myopenclncButton: Button = findViewById(R.id.buttonOpenClnc)
-        val mycloseclncButton: Button = findViewById(R.id.buttonCloseClnc)
-        val logview: TextView = findViewById(R.id.logview)
-        val topview = findViewById<TextView>(R.id.topview)
-        val mycleanTencentQQ = findViewById<Button>(R.id.buttonCleanTencentQQ)
-        val myAlipayTrip = findViewById<Button>(R.id.buttonAlipayTrip)
-        val myAlipaycode = findViewById<Button>(R.id.buttonAlipaycode)
-
-        // 调用RootCommand函数执行命令
-        val resultps = RootCommand("uname -a\n")
-        val topreslut = "Author:iPanStone@酷安\nDate:2025-05-20 18:00:00\n"
-
-        //+ "✂·····························\n"
-
-        logview.setText(resultps)
-        topview.setText(topreslut)
-
-
-        //为Button控件设置点击状态
-
-        myopenclncButton.setOnClickListener {
-            // 在这里处理点击事件
-            Toast.makeText(this, "CLNC免流被开启了", Toast.LENGTH_SHORT).show()
-            val myclncopenprocess =
-                RootCommand("sh /data/CLNC/clnc_magisk/open.sh")// 模块/clnc -p clnc.pid -g 3004 -c ../百度直连.conf
-            myclncopenprocess
-            println(myclncopenprocess)
-            Log.d("TAG", myclncopenprocess)
-            logview.setText(myclncopenprocess.toString())
-        }
-        mycloseclncButton.setOnClickListener {
-            // 在这里处理点击事件
-            Toast.makeText(this, "CLNC免流被关闭了", Toast.LENGTH_SHORT).show()
-            val myclnccloseprocess = RootCommand("sh /data/CLNC/clnc_magisk/close.sh\n")
-            println(myclnccloseprocess)
-            Log.d("TAG", myclnccloseprocess)
-            logview.setText(myclnccloseprocess.toString() + "CLNC免流被关闭了")
-
-        }
-        mycleanTencentQQ.setOnClickListener {
-            // 在这里处理点击事件
-            Toast.makeText(this, "清理QQ后台中...", Toast.LENGTH_SHORT).show()
-            val mycleanTencentQQprocess = RootCommand("sh /data/CLNC/cleanTencentQQ.sh\n")
-            println(mycleanTencentQQprocess)
-            Log.d("TAG", mycleanTencentQQprocess)
-            logview.setText(mycleanTencentQQprocess.toString() + "QQ后台清理完毕~")
-
-        }
-        myAlipayTrip.setOnClickListener() {
-            // 在这里处理点击事件
-            Toast.makeText(this, "清理Alipay后台中...", Toast.LENGTH_SHORT).show()
-            val mycleanTencentQQprocess = RootCommand("sh /data/CLNC/cleanTencentQQ.sh\n")
-            println(mycleanTencentQQprocess)
-            Log.d("TAG", mycleanTencentQQprocess)
-            logview.setText(mycleanTencentQQprocess.toString() + "QQ后台清理完毕~")
-
-            // 打开支付宝出行界面
-            // 打开支付宝出行界面
-            try {
-                val uri = Uri.parse("alipays://platformapi/startapp?appId=200011235")
-                val intent = Intent(Intent.ACTION_VIEW, uri)
-                startActivity(intent)
-            } catch (e: Exception) {
-                Toast.makeText(this, "打开支付宝出行失败，请检查是否安装支付宝", Toast.LENGTH_SHORT)
-                    .show()
-                // 备用方案：打开支付宝主界面
-                try {
-                    val intent =
-                        packageManager.getLaunchIntentForPackage("com.eg.android.AlipayGphone")
-                    startActivity(intent)
-                } catch (e: Exception) {
-                    Toast.makeText(this, "无法打开支付宝", Toast.LENGTH_SHORT).show()
-                }
-            }
-
-        }
-
-        myAlipaycode.setOnClickListener() {
-            // 在这里处理点击事件
-            Toast.makeText(this, "清理Alipay后台中...", Toast.LENGTH_SHORT).show()
-            val mycleanTencentQQprocess = RootCommand("sh /data/CLNC/cleanTencentQQ.sh\n")
-            println(mycleanTencentQQprocess)
-            Log.d("TAG", mycleanTencentQQprocess)
-            logview.setText(mycleanTencentQQprocess.toString() + "QQ后台清理完毕~")
-
-            // 打开支付宝出行界面
-            // 打开支付宝出行界面
-            try {
-                val uri = Uri.parse("alipays://platformapi/startapp?appId=20000056")
-                val intent = Intent(Intent.ACTION_VIEW, uri)
-                startActivity(intent)
-            } catch (e: Exception) {
-                Toast.makeText(
-                    this,
-                    "打开支付宝付款码失败，请检查是否安装支付宝",
-                    Toast.LENGTH_SHORT
-                ).show()
-                // 备用方案：打开支付宝主界面
-                try {
-                    val intent =
-                        packageManager.getLaunchIntentForPackage("com.eg.android.AlipayGphone")
-                    startActivity(intent)
-                } catch (e: Exception) {
-                    Toast.makeText(this, "无法打开支付宝", Toast.LENGTH_SHORT).show()
-                }
-            }
-
-        }
-
-        //为Switch控件设置状态改变监听器
-        myopenclncSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
-            // 在这里处理状态改变事件
-            if (isChecked) {
-                // Switch被打开
-                println("Switch is enableView")
-                myopenclncSwitch.text = "显示CLNC目录文件"
-                val myclncopenprocess = RootCommand("ls /data/adb/modules/CLNC\n")
-                // 将命令执行结果显示在logview中
-                logview.setText(myclncopenprocess.toString())
-            } else {
-                // Switch被关闭
-                println("Switch is DisableView")
-                myopenclncSwitch.text = "不显示CLNC目录文件"
-                var myclnccloseprocess = RootCommand("clear && uname -a \n")
-                logview.setText(myclnccloseprocess.toString())
-
-            }
-        }
-
-
-        fun replaceFragment(fragment: Fragment): Boolean {
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, fragment)
-                .commit()
-            return true
-        }
+//        // 找到布局中的Switch控件
+//        val myopenclncSwitch: Switch = findViewById(R.id.openswitchclnc)
+//        //按钮button控件
+//        val myopenclncButton: Button = findViewById(R.id.buttonOpenClnc)
+//        val mycloseclncButton: Button = findViewById(R.id.buttonCloseClnc)
+//        val logview: TextView = findViewById(R.id.logview)
+//        val topview = findViewById<TextView>(R.id.topview)
+//        val mycleanTencentQQ = findViewById<Button>(R.id.buttonCleanTencentQQ)
+//        val myAlipayTrip = findViewById<Button>(R.id.buttonAlipayTrip)
+//        val myAlipaycode = findViewById<Button>(R.id.buttonAlipaycode)
+//
+//        // 调用RootCommand函数执行命令
+//        val resultps = RootCommand("uname -a\n")
+//        val topreslut = "Author:iPanStone@酷安\nDate:2025-05-20 18:00:00\n"
+//
+//        //+ "✂·····························\n"
+//
+//        logview.setText(resultps)
+//        topview.setText(topreslut)
+//
+//
+//        //为Button控件设置点击状态
+//
+//        myopenclncButton.setOnClickListener {
+//            // 在这里处理点击事件
+//            Toast.makeText(this, "CLNC免流被开启了", Toast.LENGTH_SHORT).show()
+//            val myclncopenprocess =
+//                RootCommand("sh /data/CLNC/clnc_magisk/open.sh")// 模块/clnc -p clnc.pid -g 3004 -c ../百度直连.conf
+//            myclncopenprocess
+//            println(myclncopenprocess)
+//            Log.d("TAG", myclncopenprocess)
+//            logview.setText(myclncopenprocess.toString())
+//        }
+//        mycloseclncButton.setOnClickListener {
+//            // 在这里处理点击事件
+//            Toast.makeText(this, "CLNC免流被关闭了", Toast.LENGTH_SHORT).show()
+//            val myclnccloseprocess = RootCommand("sh /data/CLNC/clnc_magisk/close.sh\n")
+//            println(myclnccloseprocess)
+//            Log.d("TAG", myclnccloseprocess)
+//            logview.setText(myclnccloseprocess.toString() + "CLNC免流被关闭了")
+//
+//        }
+//        mycleanTencentQQ.setOnClickListener {
+//            // 在这里处理点击事件
+//            Toast.makeText(this, "清理QQ后台中...", Toast.LENGTH_SHORT).show()
+//            val mycleanTencentQQprocess = RootCommand("sh /data/CLNC/cleanTencentQQ.sh\n")
+//            println(mycleanTencentQQprocess)
+//            Log.d("TAG", mycleanTencentQQprocess)
+//            logview.setText(mycleanTencentQQprocess.toString() + "QQ后台清理完毕~")
+//
+//        }
+//        myAlipayTrip.setOnClickListener() {
+//            // 在这里处理点击事件
+//            Toast.makeText(this, "清理Alipay后台中...", Toast.LENGTH_SHORT).show()
+//            val mycleanTencentQQprocess = RootCommand("sh /data/CLNC/cleanTencentQQ.sh\n")
+//            println(mycleanTencentQQprocess)
+//            Log.d("TAG", mycleanTencentQQprocess)
+//            logview.setText(mycleanTencentQQprocess.toString() + "QQ后台清理完毕~")
+//
+//            // 打开支付宝出行界面
+//            // 打开支付宝出行界面
+//            try {
+//                val uri = Uri.parse("alipays://platformapi/startapp?appId=200011235")
+//                val intent = Intent(Intent.ACTION_VIEW, uri)
+//                startActivity(intent)
+//            } catch (e: Exception) {
+//                Toast.makeText(this, "打开支付宝出行失败，请检查是否安装支付宝", Toast.LENGTH_SHORT)
+//                    .show()
+//                // 备用方案：打开支付宝主界面
+//                try {
+//                    val intent =
+//                        packageManager.getLaunchIntentForPackage("com.eg.android.AlipayGphone")
+//                    startActivity(intent)
+//                } catch (e: Exception) {
+//                    Toast.makeText(this, "无法打开支付宝", Toast.LENGTH_SHORT).show()
+//                }
+//            }
+//
+//        }
+//
+//        myAlipaycode.setOnClickListener() {
+//            // 在这里处理点击事件
+//            Toast.makeText(this, "清理Alipay后台中...", Toast.LENGTH_SHORT).show()
+//            val mycleanTencentQQprocess = RootCommand("sh /data/CLNC/cleanTencentQQ.sh\n")
+//            println(mycleanTencentQQprocess)
+//            Log.d("TAG", mycleanTencentQQprocess)
+//            logview.setText(mycleanTencentQQprocess.toString() + "QQ后台清理完毕~")
+//
+//            // 打开支付宝出行界面
+//            // 打开支付宝出行界面
+//            try {
+//                val uri = Uri.parse("alipays://platformapi/startapp?appId=20000056")
+//                val intent = Intent(Intent.ACTION_VIEW, uri)
+//                startActivity(intent)
+//            } catch (e: Exception) {
+//                Toast.makeText(
+//                    this,
+//                    "打开支付宝付款码失败，请检查是否安装支付宝",
+//                    Toast.LENGTH_SHORT
+//                ).show()
+//                // 备用方案：打开支付宝主界面
+//                try {
+//                    val intent =
+//                        packageManager.getLaunchIntentForPackage("com.eg.android.AlipayGphone")
+//                    startActivity(intent)
+//                } catch (e: Exception) {
+//                    Toast.makeText(this, "无法打开支付宝", Toast.LENGTH_SHORT).show()
+//                }
+//            }
+//
+//        }
+//
+//        //为Switch控件设置状态改变监听器
+//        myopenclncSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
+//            // 在这里处理状态改变事件
+//            if (isChecked) {
+//                // Switch被打开
+//                println("Switch is enableView")
+//                myopenclncSwitch.text = "显示CLNC目录文件"
+//                val myclncopenprocess = RootCommand("ls /data/adb/modules/CLNC\n")
+//                // 将命令执行结果显示在logview中
+//                logview.setText(myclncopenprocess.toString())
+//            } else {
+//                // Switch被关闭
+//                println("Switch is DisableView")
+//                myopenclncSwitch.text = "不显示CLNC目录文件"
+//                var myclnccloseprocess = RootCommand("clear && uname -a \n")
+//                logview.setText(myclnccloseprocess.toString())
+//
+//            }
+//        }
+//
+//
+//        fun replaceFragment(fragment: Fragment): Boolean {
+//            supportFragmentManager.beginTransaction()
+//                .replace(R.id.fragment_container, fragment)
+//                .commit()
+//            return true
+//        }
 
 
 
