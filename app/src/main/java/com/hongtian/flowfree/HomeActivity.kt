@@ -1,5 +1,7 @@
 package com.hongtian.flowfree
 
+import android.annotation.SuppressLint
+import com.hongtian.flowfree.ALPermissionManager.RootCommand
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -27,39 +29,13 @@ import java.io.BufferedReader
 import java.io.DataOutputStream
 import java.io.InputStreamReader
 
-// 广播接收器代码
-class UnlockReceiver : BroadcastReceiver() {
-    override fun onReceive(context: Context, intent: Intent) {
-        if (intent.action == Intent.ACTION_USER_PRESENT) { // 解锁事件
-            val launchIntent = context.packageManager
-                .getLaunchIntentForPackage("com.hongtian.flowfree") // 替换包名
-            launchIntent?.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-            context.startActivity(launchIntent)
-        }
-    }
-}
+class HomeActivity : AppCompatActivity() {
 
-class MainActivity : AppCompatActivity() {
-
-
-    @RequiresApi(Build.VERSION_CODES.N)
+    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
-
-        val bottomNav = findViewById<BottomNavigationView>(R.id.bottom_navigation)
-        bottomNav.setOnItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.home -> startActivity(Intent(this, HomeActivity::class.java))
-                R.id.search -> startActivity(Intent(this, SearchActivity::class.java))
-                R.id.dashboard -> startActivity(Intent(this, DashboardActivity::class.java))
-                R.id.notifications -> startActivity(Intent(this, NotificationsActivity::class.java))
-            }
-            true
-        }
-
-
 
         // 找到布局中的Switch控件
         val myopenclncSwitch: Switch = findViewById(R.id.openswitchclnc)
@@ -201,50 +177,5 @@ class MainActivity : AppCompatActivity() {
             return true
         }
 
-
-
     }
 }
-
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!", modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    FlowfreeTheme {
-        Greeting("Android")
-    }
-}
-
-
-@RequiresApi(Build.VERSION_CODES.N)
-
-fun executeCommand(command: String): String? {
-    try {
-        // 执行外部命令
-        val process = Runtime.getRuntime().exec(command)
-
-        // 读取命令的输出
-        val reader = BufferedReader(InputStreamReader(process.inputStream))
-        val output = StringBuilder()
-        reader.use {
-            it.lines().forEach { line ->
-                output.appendln(line)
-            }
-        }
-        // 等待命令执行完成
-        process.waitFor()
-        // 返回命令的执行结果
-        return output.toString()
-    } catch (e: Exception) {
-        e.printStackTrace()
-        return null
-    }
-}
-
