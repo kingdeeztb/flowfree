@@ -55,6 +55,14 @@
         android:layout_marginTop="20dp"
         android:layout_marginRight="20dp"
         android:text="打开支付宝出行" />
+    <Button
+        android:id="@+id/buttonAlipaycode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="20dp"
+        android:text="打开支付宝付款码" />
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

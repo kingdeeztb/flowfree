@@ -53,6 +53,7 @@ class MainActivity : AppCompatActivity() {
         val topview = findViewById<TextView>(R.id.topview)
         val mycleanTencentQQ=findViewById<Button>(R.id.buttonCleanTencentQQ)
         val myAlipayTrip=findViewById<Button>(R.id.buttonAlipayTrip)
+        val myAlipaycode=findViewById<Button>(R.id.buttonAlipaycode)
 
         // 调用RootCommand函数执行命令
         val resultps = RootCommand("uname -a\n")
@@ -120,6 +121,34 @@ class MainActivity : AppCompatActivity() {
             }
 
         }
+
+        myAlipaycode.setOnClickListener() {
+            // 在这里处理点击事件
+            Toast.makeText(this, "清理Alipay后台中...", Toast.LENGTH_SHORT).show()
+            val mycleanTencentQQprocess = RootCommand("sh /data/CLNC/cleanTencentQQ.sh\n")
+            println(mycleanTencentQQprocess)
+            Log.d("TAG", mycleanTencentQQprocess)
+            logview.setText(mycleanTencentQQprocess.toString() + "QQ后台清理完毕~")
+
+            // 打开支付宝出行界面
+            // 打开支付宝出行界面
+            try {
+                val uri = Uri.parse("alipays://platformapi/startapp?appId=20000056")
+                val intent = Intent(Intent.ACTION_VIEW, uri)
+                startActivity(intent)
+            } catch (e: Exception) {
+                Toast.makeText(this, "打开支付宝付款码失败，请检查是否安装支付宝", Toast.LENGTH_SHORT).show()
+                // 备用方案：打开支付宝主界面
+                try {
+                    val intent = packageManager.getLaunchIntentForPackage("com.eg.android.AlipayGphone")
+                    startActivity(intent)
+                } catch (e: Exception) {
+                    Toast.makeText(this, "无法打开支付宝", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+        }
+
         //为Switch控件设置状态改变监听器
         myopenclncSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
             // 在这里处理状态改变事件
