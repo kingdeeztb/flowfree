@@ -1,0 +1,6 @@
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 选中状态（点击后） -->
+    <item android:color="@color/black" android:state_checked="true" />
+    <!-- 未选中状态（点击前） -->
+    <item android:color="#384D8F" android:state_checked="false" />
+</selector>

@@ -1,15 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="ExtraText">
+
     <item
         android:id="@+id/home"
-        android:title="首页" />
+        android:icon="@drawable/home_1_svgrepo_com"
+        android:title="首页"
+        app:showAsAction="ifRoom" />
+
     <item
         android:id="@+id/search"
-        android:title="磁力搜索" />
+        android:icon="@drawable/minimalistic_magnifer_svgrepo_com"
+        android:title="磁力搜索"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/fabu"
+        android:icon="@drawable/add_square_svgrepo_com"
+        android:title="发布"
+        app:showAsAction="always" />
+
     <item
         android:id="@+id/dashboard"
-        android:title="音乐畅听" />
+        android:icon="@drawable/music_notes_svgrepo_com"
+        android:title="音乐畅听"
+        app:showAsAction="ifRoom" />
+
     <item
         android:id="@+id/notifications"
-        android:title="我的" />
+        android:icon="@drawable/user_hands_svgrepo_com"
+        android:title="我的"
+        app:showAsAction="ifRoom" />
 </menu>

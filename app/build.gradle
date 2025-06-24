@@ -6,7 +6,9 @@ plugins {
 android {
     namespace 'com.hongtian.flowfree'
     compileSdk 34
-
+    viewBinding {
+        enabled = true
+    }
     defaultConfig {
         applicationId "com.hongtian.flowfree"
         minSdk 21

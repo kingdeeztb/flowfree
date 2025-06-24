@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Flowfree</string>
+    <!-- res/values/strings.xml -->
+    <string name="open_clnc_success">CLNC免流被开启了</string>
+    <string name="close_clnc_success">CLNC免流被关闭了</string>
+    <!-- 其他需要的字符串 -->
+
 </resources>
